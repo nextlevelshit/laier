@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Annotiertes Video</title>
+    <title>L·AI·ER | 42 MARATHONS IN 25 TAGEN!🤯 | I run the full length of Japan 🇯🇵 | Cyborg Season ‘25</title>
     <style>
         * {
             margin: 0;
@@ -14,6 +14,7 @@
             overflow: hidden; /* Prevent page scrolling */
             height: 100vh;
             width: 100vw;
+            font-family: "Helvetica Neue", Arial, sans-serif;
         }
 
         .container {
@@ -36,14 +37,17 @@
         }
 
         .sidebar {
+            display: flex;
+            flex-direction: column;
             position: absolute;
             top: 0;
             right: 0;
-            width: 400px;
+            width: 50vw;
+            max-width: 460px;
             height: 100vh;
             background: rgba(26, 26, 26, 0.95);
             color: white;
-            overflow-y: auto; /* Only sidebar scrolls */
+            overflow-y: scroll; /* Only sidebar scrolls */
             padding: 20px;
             backdrop-filter: blur(5px);
             transform: translateX(100%);
@@ -56,13 +60,16 @@
         }
 
         .annotation {
-            margin-bottom: 20px;
             padding: 15px;
             border-left: 3px solid #4CAF50;
-            background: rgba(42, 42, 42, 0.9);
+            /*background: rgba(42, 42, 42, 0.9);*/
             cursor: pointer;
             transition: all 0.3s;
             border-radius: 8px;
+        }
+
+        .annotation + .annotation {
+            margin-top: 48px;
         }
 
         .annotation:hover {
@@ -75,11 +82,70 @@
             box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
         }
 
+        .annotation-section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            color: #888;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .collapsible-section {
+            margin: 10px 0;
+        }
+
+        .collapsible-section details {
+            /*background: rgba(34, 34, 34, 0.7);*/
+            border-radius: 6px;
+            /*padding: 10px;*/
+        }
+
+        .collapsible-section summary {
+            color: #888;
+            font-size: 1.2rem;
+            padding: 5px;
+            /*margin-bottom: 5px;*/
+        }
+
+        .collapsible-section .annotation {
+            margin-bottom: 10px;
+            opacity: 0.7;
+            background: rgba(42, 42, 42, 0.5);
+        }
+
+        /* Subtitles overlay */
+        .subtitles-overlay {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 38px;
+            line-height: 1.4;
+            max-width: 80%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 500;
+            pointer-events: none;
+        }
+
+        .subtitles-overlay.visible {
+            opacity: 1;
+        }
+
         .timestamp {
             color: #4CAF50;
             font-weight: bold;
             margin-bottom: 8px;
-            font-size: 1.1em;
+            font-size: 1.1rem;
         }
 
         .annotation.active .timestamp {
@@ -93,9 +159,8 @@
 
         summary {
             cursor: pointer;
-            padding: 5px 0;
-            font-weight: bold;
-            color: #888;
+            padding: 12px 0;
+            color: #cbcbcb;
             list-style: none;
         }
 
@@ -118,17 +183,18 @@
             font-style: italic;
             margin-bottom: 10px;
             color: #ccc;
-            font-size: 0.95em;
+            font-size: 1.65rem;
         }
 
         .enhancement {
             margin-bottom: 10px;
             line-height: 1.4;
+            font-size: 1.25rem;
         }
 
         .citations {
-            font-size: 0.85em;
-            color: #888;
+            font-size: 1rem;
+            color: #a1a1a1;
             padding-top: 8px;
             border-top: 1px solid #444;
         }
@@ -164,6 +230,7 @@
                 id="video-iframe"
                 src="https://www.youtube.com/embed/-wpnNhdADsE?enablejsapi=1">
         </iframe>
+        <div class="subtitles-overlay" id="subtitles-overlay"></div>
     </div>
 
     <div class="sidebar" id="sidebar">
@@ -181,7 +248,7 @@
     const Logger = {
         logs: [],
         maxLogs: 50,
-        debugMode: true, // Toggle this for production
+        debugMode: false, // Toggle this for production
 
         log: function (message, data = null) {
             const timestamp = new Date().toLocaleTimeString();
@@ -236,10 +303,18 @@
             },
             "annotations": [
                 {
+                    "timestamp": "0:00",
+                    "original_text": "Philosophische und motivationale Entscheidungsfindung",
+                    "annotation": "",
+                    "enhancement": "42 MARATHONS IN 25 TAGEN!🤯 | I run the full length of Japan 🇯🇵 | Cyborg Season '25",
+                    "citations": [""],
+                    "philosophical_depth": 2
+                },
+                {
                     "timestamp": "7:37",
                     "original_text": "ich habe jeden Tag die Entscheidung zu sagen bleibe ich liegen chill jetzt noch oder gehe ich raus und mach das was ich tun muss",
                     "annotation": "Dies berührt Sartres Konzept der radikalen Freiheit und Verantwortung. Jeder Moment präsentiert das, was Existentialisten 'die fundamentale Wahl' nennen.",
-                    "enhancement": "Der Sprecher identifiziert das zentrale existentialistische Dilemma - was Sartre 'être-pour-soi' (Sein-für-sich) nannte. Diese täglich Wahl repräsentiert das, was Viktor Frankl 'die letzte menschliche Freiheit' nannte - die Fähigkeit, seine Haltung in jeder Situation zu wählen.",
+                    "enhancement": "Der Sprecher identifiziert das zentrale existentialistische Dilemma - was Sartre 'être-pour-soi' (Sein-für-sich) nannte. Diese tägliche Wahl repräsentiert das, was Viktor Frankl 'die letzte menschliche Freiheit' nannte - die Fähigkeit, seine Haltung in jeder Situation zu wählen.",
                     "citations": ["Sartre, J.P. 'Das Sein und das Nichts' (1943)", "Frankl, V. 'Die Suche des Menschen nach Sinn' (1946)"],
                     "philosophical_depth": 8
                 },
@@ -264,17 +339,89 @@
                     "original_text": "es ist ein Naturgesetz dass wenn du Gas gibst und wirklich aus dem Herzen heraus 100% gibst",
                     "annotation": "Behauptet Naturgesetzes-Status für Anstrengung-Belohnung-Korrelation - benötigt Nuancierung.",
                     "enhancement": "Während Anstrengung oft mit Ergebnissen korreliert, vereinfacht die Bezeichnung als 'Naturgesetz' komplexe Systeme. Nassim Talebs Arbeit über Zufälligkeit und der 'Gerecht-Welt-Fehlschluss' in der Psychologie zeigen, dass diese Beziehung eher probabilistisch als deterministisch ist.",
-                    "citations": ["Taleb, N.N. 'Der Schwarze Schwan' (2001)", "Lerner, M.J. 'Der Glaube an eine gerechte Welt' (1980)"],
+                    "citations": ["Taleb, N.N. 'Der Schwarze Schwan' (2007)", "Lerner, M.J. 'Der Glaube an eine gerechte Welt' (1980)"],
                     "philosophical_depth": 6,
-                    "correction": "Die Behauptung des Sprechers benötigt Abschwächung durch Anerkennung systemischer Faktoren und Zufälligkeit."
+                    "correction": "Die Behauptung benötigt Abschwächung durch Anerkennung systemischer Faktoren und Zufälligkeit."
                 },
                 {
                     "timestamp": "13:50",
-                    "original_text": "fokussiert dich in eurem Leben immer auf Kontinuität nicht auf die Perfektion",
+                    "original_text": "fokussiert euch in eurem Leben immer auf Kontinuität nicht auf die Perfektion",
                     "annotation": "Stellt Perfektionismus zugunsten konstanten Fortschritts in Frage - psychologisch validierter Ansatz.",
                     "enhancement": "Dies stimmt mit Forschung zu 'Implementierungsabsichten' und 'Gewohnheitsbildung' überein. Der Sprecher erfasst intuitiv das, was Brené Brown 'Perfektionismus als Feind des Fortschritts' nennt und was James Clear 'atomare Gewohnheiten' bezeichnet.",
                     "citations": ["Gollwitzer, P.M. 'Implementierungsabsichten' (1999)", "Clear, J. 'Die 1%-Methode' (2018)", "Brown, B. 'Die Gaben der Unperfektion' (2010)"],
                     "philosophical_depth": 8
+                },
+                {
+                    "timestamp": "10:31",
+                    "original_text": "es gibt zwei grundlegende Unterschiede jemand dem es nicht gut geht und trotzdem versucht irgendwie aus diesen Situation das Beste zu machen",
+                    "annotation": "Identifiziert die Dichotomie zwischen reaktiver Opferhaltung und proaktiver Resilienz.",
+                    "enhancement": "Dies reflektiert das stoische Konzept der 'Dichotomie der Kontrolle' - fokussiere dich auf das, was du beeinflussen kannst. Moderne Resilienzforschung bestätigt, dass 'Locus of Control' ein kritischer Faktor für psychische Gesundheit ist. Seligmans 'Learned Optimism' zeigt, wie Attributionsstile Lebensergebnisse prägen.",
+                    "citations": ["Epiktet, 'Handbüchlein der Moral'", "Rotter, J.B. 'Locus of Control' (1966)", "Seligman, M. 'Erlernte Hilflosigkeit' (1972)"],
+                    "philosophical_depth": 8
+                },
+                {
+                    "timestamp": "11:36",
+                    "original_text": "es ist you versus you ihr müsst lernen euch nur auf euch selber zu fokussieren",
+                    "annotation": "Kernprinzip der Selbstoptimierung - interner versus externer Vergleichsfokus.",
+                    "enhancement": "Dies spiegelt das buddhistische Konzept von 'Mudita' (Mitfreude) wider - Freude am Erfolg anderer statt Neid. Soziale Vergleichstheorie (Festinger) zeigt, wie destruktiv externe Vergleiche sein können. Der Fokus auf persönlichen Fortschritt stimmt mit Flow-Theorie überein.",
+                    "citations": ["Festinger, L. 'Theorie sozialer Vergleichsprozesse' (1957)", "Csikszentmihalyi, M. 'Flow-Theorie' (1990)", "Buddhistische Brahmaviharas"],
+                    "philosophical_depth": 7
+                },
+                {
+                    "timestamp": "12:44",
+                    "original_text": "versucht zu gucken was er dafür gemacht hat und vielleicht euch die ein zwei Sachen rauspickt",
+                    "annotation": "Strategischer Wissenserwerb durch selektive Modellierung statt blindem Kopieren.",
+                    "enhancement": "Dies zeigt Meta-Lernen in Aktion - 'Learning how to learn'. Banduras Theorie des sozialen Lernens betont selektive Nachahmung. Der Ansatz vermeidet das, was Psychologen 'Vergleichsfalle' nennen, und fokussiert auf praktischen Wissenserwerb.",
+                    "citations": ["Bandura, A. 'Soziale Lerntheorie' (1977)", "Dweck, C. 'Growth Mindset' (2006)", "Newport, C. 'Deep Work' (2016)"],
+                    "philosophical_depth": 6
+                },
+                {
+                    "timestamp": "26:45",
+                    "original_text": "manchmal hö ich auch wirklich einfach gar nichts ich glaube das ist auch gut wenn man das trainiert",
+                    "annotation": "Befürwortet sensorische Deprivation als mentales Training - kontemplative Praxis.",
+                    "enhancement": "Dies berührt meditative Prinzipien der Achtsamkeit ohne externe Stimulation. Neurowissenschaftliche Forschung zeigt, dass das 'Default Mode Network' während stiller Perioden aktiv wird, was Kreativität und Selbstreflexion fördert. Stoische Askese als mentale Abhärtung.",
+                    "citations": ["Kabat-Zinn, J. 'Achtsamkeitsbasierte Stressreduktion'", "Raichle, M. 'Default Mode Network' (2001)", "Seneca, 'Briefe an Lucilius'"],
+                    "philosophical_depth": 7
+                },
+                {
+                    "timestamp": "26:57",
+                    "original_text": "die Motivation sollte von innen rauskommen und das müsst ihr hinkriegen",
+                    "annotation": "Unterscheidung zwischen extrinsischer und intrinsischer Motivation - psychologische Autonomie.",
+                    "enhancement": "Kernprinzip der Selbstbestimmungstheorie: Intrinsische Motivation ist nachhaltiger als externe Belohnungen. Dies vermeidet das 'Overjustification Effect' - wo externe Belohnungen interne Motivation untergraben. Philosophisch entspricht dies Kants kategorischem Imperativ der Selbstbestimmung.",
+                    "citations": ["Deci, E.L. & Ryan, R.M. 'Intrinsische Motivation' (1985)", "Lepper, M. 'Overjustification Effect' (1973)", "Kant, I. 'Grundlegung zur Metaphysik der Sitten'"],
+                    "philosophical_depth": 8
+                },
+                {
+                    "timestamp": "41:27",
+                    "original_text": "das Wetter hat noch nie eine Rolle gespielt bei gar keiner Sache das einzige was eine Rolle spielt ist euer Wille",
+                    "annotation": "Radikale Willensphilosophie - Umweltbedingungen als irrelevant deklariert.",
+                    "enhancement": "Dies reflektiert Schopenhauers 'Die Welt als Wille und Vorstellung' - der Wille als primäre Realität. Stoische Wettergleichnis: Wir können das Wetter nicht kontrollieren, aber unsere Reaktion darauf. Moderne Forschung zu 'Grit' bestätigt Willenskraft als Erfolgsprediktor.",
+                    "citations": ["Schopenhauer, A. 'Die Welt als Wille und Vorstellung'", "Duckworth, A. 'Grit: Die neue Formel zum Erfolg' (2016)", "Epiktet über Wetterbeispiele"],
+                    "philosophical_depth": 9
+                },
+                {
+                    "timestamp": "28:52",
+                    "original_text": "ich glaube sehr fest dran dass umso schwerer oder umso schlimmer du dir das in deinen eigenen Kopf einredest umso schlimmer wird's auch",
+                    "annotation": "Beschreibt den Placebo/Nocebo-Effekt und kognitive Rahmenbildung.",
+                    "enhancement": "Dies beschreibt das, was Psychologen 'Selbsterfüllende Prophezeiung' nennen. Neurowissenschaft zeigt, dass Erwartungen tatsächlich körperliche Reaktionen modulieren können. Das entspricht buddhistischen Lehren über 'Geist über Materie' und stoischen Prinzipien der kognitiven Kontrolle.",
+                    "citations": ["Rosenthal, R. 'Pygmalion-Effekt' (1968)", "Benedetti, F. 'Placebo-Forschung'", "Marcus Aurelius über Wahrnehmung"],
+                    "philosophical_depth": 7
+                },
+                {
+                    "timestamp": "36:19",
+                    "original_text": "es ist wirklich eine Achterbahn der Gefühle mal es ist da was mal ist hier was",
+                    "annotation": "Anerkennt die Unbeständigkeit emotionaler Zustände - buddhistische Vergänglichkeitslehre.",
+                    "enhancement": "Dies beschreibt das buddhistische Konzept der 'Anicca' (Vergänglichkeit) - alle Zustände sind temporär. Moderne Emotionsregulationsforschung bestätigt, dass Emotionen natürlicherweise fluktuieren. Die Akzeptanz dieser Fluktuation reduziert zusätzliches Leiden durch Widerstand gegen natürliche Prozesse.",
+                    "citations": ["Buddhistische Drei Daseinsmerkmale", "Gross, J.J. 'Emotionsregulation' (1998)", "Heraklit über Wandel"],
+                    "philosophical_depth": 8
+                },
+                {
+                    "timestamp": "36:31",
+                    "original_text": "immer geht's irgendwie immer geht's irgendwie",
+                    "annotation": "Pragmatischer Optimismus - Vertrauen in menschliche Anpassungsfähigkeit.",
+                    "enhancement": "Dies spiegelt Camus' Absurdismus wider - trotz der Sinnlosigkeit des Universums müssen wir weitermachen. Psychologisch entspricht dies 'Learned Optimism' und Resilienzforschung. Die Phrase zeigt Vertrauen in die menschliche Fähigkeit zur Adaptation unter widrigen Umständen.",
+                    "citations": ["Camus, A. 'Der Mythos des Sisyphos'", "Seligman, M. 'Learned Optimism'", "Bonanno, G. 'Resilienzforschung'"],
+                    "philosophical_depth": 7
                 }
             ]
         }
@@ -340,40 +487,60 @@
     }
 
     // Render annotations with collapsible structure
+    // Replace the renderAnnotations function
     function renderAnnotations() {
         const sidebar = document.getElementById('sidebar');
-        sidebar.innerHTML = ''; // Clear existing content
+        sidebar.innerHTML = `
+        <div class="annotation-section">
+<!--            <div class="section-title">Vergangene</div>-->
+            <div class="collapsible-section">
+                <details>
+                    <summary id="previous-count">Vergangene Bemerkungen laden (0)</summary>
+                    <div id="previous-annotations"></div>
+                </details>
+            </div>
+        </div>
 
+        <div class="annotation-section">
+<!--            <div class="section-title">Aktuell</div>-->
+            <div id="current-annotations"></div>
+        </div>
+
+        <div class="annotation-section">
+<!--            <div class="section-title">Kommende</div>-->
+            <div class="collapsible-section">
+                <details>
+                    <summary id="upcoming-count">Nächste Bemerkungen laden (0)</summary>
+                    <div id="upcoming-annotations"></div>
+                </details>
+            </div>
+        </div>
+    `;
+
+        // Pre-render all annotations in their respective containers
         annotations.forEach((annotation, index) => {
             const div = document.createElement('div');
             div.className = 'annotation';
             div.setAttribute('data-time', annotation.timestampSeconds);
             div.setAttribute('data-index', index);
 
-            // Create collapsible structure for inactive annotations
             div.innerHTML = `
-                <div class="timestamp">${annotation.timestamp}</div>
-                <details class="annotation-details">
-                    <summary>Annotation anzeigen</summary>
-                    <div class="original-text">"${annotation.original_text}"</div>
-                    <div class="enhancement">${annotation.enhancement}</div>
-                    <div class="citations">${annotation.citations.join(', ')}</div>
-                </details>
-            `;
+            <div class="timestamp">${annotation.timestamp}</div>
+            <div class="original-text">"${annotation.original_text}"</div>
+            <div class="enhancement">${annotation.enhancement}</div>
+            <div class="citations">${annotation.citations.join(', ')}</div>
+        `;
 
-            // Click handler für Zeitsprung
-            div.addEventListener('click', (e) => {
-                // Prevent navigation when clicking on details/summary
-                if (e.target.tagName !== 'SUMMARY') {
-                    Logger.log(`Seeking to timestamp: ${annotation.timestamp} (${annotation.timestampSeconds}s)`);
-                    player.seekTo(annotation.timestampSeconds);
-                }
+            div.addEventListener('click', () => {
+                Logger.log(`Seeking to timestamp: ${annotation.timestamp}`);
+                player.seekTo(annotation.timestampSeconds);
             });
 
-            sidebar.appendChild(div);
+            // Initially add to upcoming (will be sorted later)
+            document.getElementById('upcoming-annotations').appendChild(div);
         });
 
-        Logger.log('Annotations rendered');
+        Logger.log('Annotations rendered in new structure');
     }
 
     // Video Progress tracking
@@ -388,55 +555,70 @@
 
     // Update annotation visibility based on current video time
     function updateAnnotationVisibility(currentTime) {
-        const annotationElements = document.querySelectorAll('.annotation');
         const sidebar = document.getElementById('sidebar');
-        let hasActiveAnnotations = false;
+        const subtitlesOverlay = document.getElementById('subtitles-overlay');
+        const currentContainer = document.getElementById('current-annotations');
+        const previousContainer = document.getElementById('previous-annotations');
+        const upcomingContainer = document.getElementById('upcoming-annotations');
 
-        annotationElements.forEach(el => {
-            const annotationTime = parseInt(el.getAttribute('data-time'));
-            const details = el.querySelector('.annotation-details');
+        let activeAnnotations = [];
+        let previousCount = 0;
+        let upcomingCount = 0;
+        let currentSubtitle = '';
 
-            const isActive = Math.abs(currentTime - annotationTime) < ANNOTATION_TOLERANCE;
+        // Sort annotations by time relationship to current video time
+        annotations.forEach((annotation, index) => {
+            const annotationElement = document.querySelector(`[data-index="${index}"]`);
+            const timeDiff = annotation.timestampSeconds - currentTime;
+            const isActive = Math.abs(timeDiff) < ANNOTATION_TOLERANCE;
 
             if (isActive) {
-                el.classList.add('active');
-                // Show full content for active annotations
-                details.innerHTML = `
-                    <div class="original-text">"${annotations[el.getAttribute('data-index')].original_text}"</div>
-                    <div class="enhancement">${annotations[el.getAttribute('data-index')].enhancement}</div>
-                    <div class="citations">${annotations[el.getAttribute('data-index')].citations.join(', ')}</div>
-                `;
-                hasActiveAnnotations = true;
-
-                if (!currentActiveAnnotations.includes(annotationTime)) {
-                    Logger.log(`Annotation activated at ${annotations[el.getAttribute('data-index')].timestamp}`);
-                    currentActiveAnnotations.push(annotationTime);
+                // Move to current section
+                activeAnnotations.push(annotation);
+                annotationElement.classList.add('active');
+                if (annotationElement.parentNode !== currentContainer) {
+                    currentContainer.appendChild(annotationElement);
+                }
+                currentSubtitle = annotation.original_text;
+                Logger.log(`Active annotation: ${annotation.timestamp}`);
+            } else if (timeDiff < -ANNOTATION_TOLERANCE) {
+                // Move to previous section
+                previousCount++;
+                annotationElement.classList.remove('active');
+                if (annotationElement.parentNode !== previousContainer) {
+                    previousContainer.appendChild(annotationElement);
                 }
             } else {
-                el.classList.remove('active');
-                // Restore collapsible structure for inactive annotations
-                details.innerHTML = `
-                    <summary>Annotation anzeigen</summary>
-                    <div class="original-text">"${annotations[el.getAttribute('data-index')].original_text}"</div>
-                    <div class="enhancement">${annotations[el.getAttribute('data-index')].enhancement}</div>
-                    <div class="citations">${annotations[el.getAttribute('data-index')].citations.join(', ')}</div>
-                `;
-
-                // Remove from active list
-                const index = currentActiveAnnotations.indexOf(annotationTime);
-                if (index > -1) {
-                    currentActiveAnnotations.splice(index, 1);
+                // Move to upcoming section
+                upcomingCount++;
+                annotationElement.classList.remove('active');
+                if (annotationElement.parentNode !== upcomingContainer) {
+                    upcomingContainer.appendChild(annotationElement);
                 }
             }
         });
 
-        // Show/hide sidebar based on active annotations
+        // Update section counters
+        document.getElementById('previous-count').textContent = `Vorherige laden (${previousCount})`;
+        document.getElementById('upcoming-count').textContent = `Kommende laden (${upcomingCount})`;
+
+        // Show/hide sidebar and subtitles
+        const hasActiveAnnotations = activeAnnotations.length > 0;
+
         if (hasActiveAnnotations && !sidebar.classList.contains('visible')) {
             Logger.log('Sidebar shown - active annotations found');
             sidebar.classList.add('visible');
         } else if (!hasActiveAnnotations && sidebar.classList.contains('visible')) {
             Logger.log('Sidebar hidden - no active annotations');
             sidebar.classList.remove('visible');
+        }
+
+        // Handle subtitles
+        if (currentSubtitle && hasActiveAnnotations) {
+            subtitlesOverlay.textContent = `"${currentSubtitle}"`;
+            subtitlesOverlay.classList.add('visible');
+        } else {
+            subtitlesOverlay.classList.remove('visible');
         }
     }
 
